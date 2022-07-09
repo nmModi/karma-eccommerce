@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block banner_tagline %}Shop{% endblock %}
+{% block banner1 %} <a href="{% url 'cart:cart_detail' %}"> Cart {% endblock %}
+{% block banner2 %} <a href="{% url 'orders:order_create' %}"> Checkout {% endblock %}
+
+{% block content %}
+<!--================Checkout Area =================-->
+<section class="checkout_area section_gap">
+    <div class="container">
+        {% if not user.is_authenticated %}
+        <div class="returning_customer">
+            <div class="check_title">
+                <h2>Returning Customer? <a href="#">Click here to login</a></h2>
+            </div>
+            <p>If you have shopped with us before, please enter your details in the boxes below. If you are a new
+                customer, please proceed to the Billing & Shipping section.</p>
+            <form class="row contact_form" action="#" method="post" novalidate="novalidate">
+                <div class="col-md-6 form-group p_star">
+                    <input type="text" class="form-control" id="name" name="name">
+                    <span class="placeholder" data-placeholder="Username or Email"></span>
+                </div>
+                <div class="col-md-6 form-group p_star">
+                    <input type="password" class="form-control" id="password" name="password">
+                    <span class="placeholder" data-placeholder="Password"></span>
+                </div>
+                <div class="col-md-12 form-group">
+                    <button type="submit" value="submit" class="primary-btn">login</button>
+                    <div class="creat_account">
+                        <input type="checkbox" id="f-option" name="selector">
+                        <label for="f-option">Remember me</label>
+                    </div>
+                    <a class="lost_pass" href="#">Lost your password?</a>
+                </div>
+            </form>
+        </div>
+        {% endif %}
+        {% if not cart.coupon %}
+        <div class="cupon_area">
+            <div class="check_title">
+                <h2>Have a coupon?</h2>
+            </div>
+            <form action="{% url 'coupons:apply' %}" method="post" id="coupon-form">
+                {{ coupon_apply_form.code }}
+                <input type="submit" value="Apply Coupon" class="tp_btn" style="width:20%">
+                {% csrf_token %}
+            </form>
+        </div>
+        {% endif %}
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-7">
+                    <h3>Billing Details</h3>
+                    <form action="." method="post" id="order-form">
+                        {{ form.as_p }}
+                        {% csrf_token %}
+                    </form>
+                </div>
+
+
+                <div class="col-lg-5">
+                    <div class="order_box">
+                        <h2>Your Order</h2>
+                        <ul class="list">
+                            <li><a href="#">Product <span>Total</span></a></li>
+                            {% for item in cart %}
+                            <li><a href="#">{{ item.product.brand }} {{ item.product.model|truncatechars:"20" }} <span
+                                    class="middle">x {{ item.quantity }}</span>
+                                <span class="last">${{ item.total_price }}</span></a></li>
+                            {% endfor %}
+                        </ul>
+                        <ul class="list list_2">
+                            {% if cart.coupon %}
+                            <li><a href="#">Subtotal <span>${{ cart.get_total_price }}</span></a></li>
+                            <li><a href="#">Coupon Discount (<i style="color:red;">-{{ cart.coupon.discount }}%</i>)
+                                <span style="color:red">${{ cart.get_discount|floatformat:"2" }}</span>
+                            </a></li>
+                            {% endif %}
+                            <li><a href="#">Total
+                                <span>${{ cart.get_total_price_after_discount|floatformat:"2" }}</span></a></li>
+                        </ul>
+                        <div class="payment_item">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option5" name="selector">
+                                <label for="f-option5">Check payments</label>
+                                <div class="check"></div>
+                            </div>
+                            <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
+                                Store Postcode.</p>
+                        </div>
+                        <div class="payment_item active">
+                            <div class="radion_btn">
+                                <input type="radio" id="f-option6" name="selector">
+                                <label for="f-option6">Paypal </label>
+                                <img src="img/product/card.jpg" alt="">
+                                <div class="check"></div>
+                            </div>
+                            <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
+                                account.</p>
+                        </div>
+                        <div class="creat_account">
+                            <input type="checkbox" id="f-option4" name="selector">
+                            <label for="f-option4">I’ve read and accept the </label>
+                            <a href="#">terms & conditions*</a>
+                        </div>
+                        <button form="order-form" class="primary-btn" type="submit" style="border:none">Proceed to PayPal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Checkout Area =================-->
+{% endblock %}

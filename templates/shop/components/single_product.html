@@ -1,0 +1,29 @@
+<div class="single-product">
+    <a href="{{ product.get_absolute_url }}"><img class="img-fluid" src="{{ product.image.url }}" alt=""></a>
+    <div class="product-details">
+        <h6>{{ product.brand }} {{ product.model }}</h6>
+        <div class="price">
+            <h6>${{ product.price }}</h6>
+        </div>
+        <div class="prd-bottom">
+
+            <a class="social-info update-cart" data-product="{{ product.id }}"
+               data-url="{% url 'cart:cart_add' product.id %}" data-action="add">
+                <span class="ti-bag"></span>
+                <p class="hover-text">add to bag</p>
+            </a>
+            <a href="" class="social-info">
+                <span class="lnr lnr-heart"></span>
+                <p class="hover-text">Wishlist</p>
+            </a>
+            <a href="" class="social-info">
+                <span class="lnr lnr-sync"></span>
+                <p class="hover-text">compare</p>
+            </a>
+            <a href="{{ product.get_absolute_url }}" class="social-info">
+                <span class="lnr lnr-move"></span>
+                <p class="hover-text">view more</p>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+{% for product in data %}
+<div class="col-lg-4 col-md-6">
+    <div class="single-product">
+        <img class="img-fluid" src="{{ product.image.url }}" alt="">
+        <div class="product-details">
+            <h6>{{ product.brand }} {{ product.model }}</h6>
+            <div class="price">
+                {% if product.is_discount %}
+                <h6>${{ product.get_total_price }}</h6>
+                <h6 class="l-through">${{ product.price }}</h6>
+                {% else %}
+                <h6>${{ product.price }}</h6>
+                {% endif %}
+            </div>
+            <div class="prd-bottom">
+
+                <a href="" class="social-info">
+                    <span class="ti-bag"></span>
+                    <p class="hover-text">add to bag</p>
+                </a>
+                <a href="" class="social-info">
+                    <span class="lnr lnr-heart"></span>
+                    <p class="hover-text">Wishlist</p>
+                </a>
+                <a href="" class="social-info">
+                    <span class="lnr lnr-sync"></span>
+                    <p class="hover-text">compare</p>
+                </a>
+                <a href="{{ product.get_absolute_url }}" class="social-info">
+                    <span class="lnr lnr-move"></span>
+                    <p class="hover-text">view more</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}

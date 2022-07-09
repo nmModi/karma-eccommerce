@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block banner_tagline %}Cart{% endblock %}
+{% block banner1 %} <a href="{% url 'shop:home' %}"> Home {% endblock %}
+{% block banner2 %} <a href="{% url 'cart:cart_detail' %}"> Cart {% endblock %}
+
+{% block content %}
+<!--================Cart Area =================-->
+<section class="cart_area">
+    <div class="container">
+        <div class="cart_inner">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for item in cart %}
+                    {% with product=item.product %}
+                    <tr>
+                        <td>
+                            <div class="media">
+                                <div class="d-flex">
+                                    <a href="{{ product.get_absolute_url }}">
+                                        <img src="{{ product.image.url }}" width="200px" height="200px" alt="">
+                                    </a>
+                                </div>
+                                <div class="media-body">
+                                    <p>{{ product.brand }} {{ product.model }}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <h5>${{ product.price }}</h5>
+                        </td>
+                        <td>
+                            <div class="product_count">
+                                <input type="text" name="qty" id="sst" maxlength="12" value="{{ item.quantity }}"
+                                       title="Quantity:"
+                                       class="input-text qty">
+                                <button class="increase items-count update-cart" type="button"
+                                        data-product="{{ product.id }}" data-action="add"
+                                        data-url="{% url 'cart:cart_add' product.id %}" data-qty="{{ item.quantity }}"
+                                        data-cart_remove_url="{% url 'cart:cart_remove' product.id %}">
+                                    <i class="lnr lnr-chevron-up"></i></button>
+                                <button class="reduced items-count update-cart" type="button"
+                                        data-product="{{ product.id }}" data-action="remove"
+                                        data-url="{% url 'cart:cart_add' product.id %}" data-qty="{{ item.quantity }}"
+                                        data-cart_remove_url="{% url 'cart:cart_remove' product.id %}">
+                                    <i class="lnr lnr-chevron-down"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <h5>${{ item.total_price }}</h5>
+                        </td>
+                    </tr>
+                    {% endwith %}
+                    {% endfor %}
+                    <tr class="bottom_button">
+                        <td>
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <form action="{% url 'coupons:apply' %}" method="post">
+                                <div class="cupon_text d-flex align-items-center">
+                                    {{ coupon_apply_form.code }}
+                                    <input type="submit" value="Apply" class="primary-btn" style="color:white;">
+                                    {% csrf_token %}
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% if cart.coupon %}
+                    <tr>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <h5>Subtotal</h5>
+                        </td>
+                        <td>
+                            <h5>${{ cart.get_total_price|floatformat:"2" }}</h5>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                        </td>
+                        <td></td>
+                        <td>
+                            <h5>"{{ cart.coupon.code }}" coupon
+                                ({{ cart.coupon.discount }}% off)</h5>
+                        </td>
+                        <td>
+                            <h5 style="color:red;">-${{ cart.get_discount|floatformat:"2" }}</h5>
+                        </td>
+                    </tr>
+                    {% endif %}
+                    <tr class="shipping_area">
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <h5>Total</h5>
+                        </td>
+                        <td>
+                            <h5>${{ cart.get_total_price_after_discount|floatformat:"2" }}</h5>
+                        </td>
+                    </tr>
+                    <tr class="out_button_area">
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+
+                        </td>
+                        <td>
+                            <div class="checkout_btn_inner d-flex align-items-center">
+                                <a class="gray_btn" href="{% url 'shop:product_list' %}">Continue Shopping</a>
+                                <a class="primary-btn" href="{% url 'orders:order_create' %}">Checkout</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% if recommended_products %}
+{% include 'includes/related_products.html' %}
+{% endif %}
+<!--================End Cart Area =================-->
+{% endblock %}

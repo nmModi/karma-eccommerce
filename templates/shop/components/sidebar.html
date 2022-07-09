@@ -1,0 +1,78 @@
+{% load static %}
+<div class="col-xl-3 col-lg-4 col-md-5">
+    <div class="sidebar-filter mt-50">
+        <div class="top-filter-head">Product Filters</div>
+        <div class="common-filter">
+            <div class="head">Category</div>
+            <form action="#">
+                <ul>
+                    {% for category in categories %}
+                    <li class="filter-list">
+                        <label>
+                            <input class="pixel-radio" type="checkbox" value="{{ category.1 }}"
+                                   data-filter="category"
+                                   name="category">
+                            {{ category.0 }}
+                            <span></span>
+                        </label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+        <div class="common-filter">
+            <div class="head">Brands</div>
+            <form action="#">
+                <ul>
+                    {% for brand in brands %}
+                    <li class="filter-list">
+                        <label>
+                            <input class="pixel-radio" type="checkbox" value="{{ brand.1 }}" data-filter="brand"
+                                   name="brand">
+                            {{ brand.0 }}
+                            <span></span>
+                        </label>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+        <div class="common-filter">
+            <div class="head">Color</div>
+            <form action="#">
+                <ul>
+                    {% for color in colors %}
+                    <li class="filter-list">
+                        <label>
+                            <input class="pixel-radio" style="background:{{ color.2 }}" type="checkbox"
+                                   name="color" data-filter="color"
+                                   value="{{ color.1 }}">
+                            {{ color.0 }}
+                            <span></span>
+                        </label>
+                    </li>
+                    {% endfor %}
+                    <li class="filter-list">
+                        <label style="padding:5px">
+                            <span id="loadMore"><strong>+ </strong>Load more</span>
+                        </label>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="common-filter">
+            <div class="head">Price</div>
+            <div class="price-range-area">
+                <div id="price-range"></div>
+                <div class="value-wrapper d-flex">
+                    <div class="price">Price:</div>
+                    <span>$</span>
+                    <div id="lower-value"></div>
+                    <div class="to">to</div>
+                    <span>$</span>
+                    <div id="upper-value"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block banner_tagline %}Registration{% endblock %}
+{% block banner1 %} <a href="{% url 'login' %}"> Login {% endblock %}
+{% block banner2 %} <a href="{% url 'register' %}"> Create an account {% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3" style="text-align:center;">
+            <h1>Create an account</h1>
+            <p>Please, sign up using the following form:</p>
+            <form action="." method="post" class="row login_form">
+                <div class="col-md-12 form-group">
+                    {{ form.as_p }}
+                </div>
+                {% csrf_token %}
+                <div class="col-md-12 form-group">
+                    <button type="submit" value="submit" class="primary-btn">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

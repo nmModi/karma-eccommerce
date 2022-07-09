@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block banner_tagline %}Confirmation{% endblock %}
+{% block banner1 %} <a href="{% url 'shop:home' %}"> Home {% endblock %}
+{% block banner2 %} <a href="{% url 'cart:cart_detail' %}"> Confirmation {% endblock %}
+
+{% block content %}
+<!--================Order Details Area =================-->
+<section class="order_details section_gap">
+    <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <h2>{{ message|safe }}, <a href="{% url 'login' %}">Click here to login...</a></h2>
+        {% endfor %}
+        {% elif not orders %}
+        <h2 style="text-align:center;">Your shopping history is empty...</h2>
+        {% endif %}
+        {% for item in orders %}
+        <h3 class="title_confirmation">Thank you. Your order has been received.</h3>
+        <div class="row order_d_inner">
+            <div class="col-lg-6">
+                <div class="details_item">
+                    <h4>Order Info</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Order number</span> : {{ item.id }}</a></li>
+                        <li><a href="#"><span>Date</span> : {{ item.created }} </a></li>
+                        <li><a href="#"><span>Total</span> : USD {{ item.get_total_cost|floatformat:"2" }}</a></li>
+                        <li><a href="#"><span>Payment method</span> : Check payments</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="details_item">
+                    <h4>Shipping Address</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Street</span> : {{ item.address }}</a></li>
+                        <li><a href="#"><span>City</span> : {{ item.city }}</a></li>
+                        <li><a href="#"><span>Country</span> : {{ item.country }}</a></li>
+                        <li><a href="#"><span>Postcode </span> : {{ item.postal_code }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order_item in item.orderitem_set.all %}
+                    {{ order_item }}
+                    <tr>
+                        <td>
+                            <p>Pixelstore fresh Blackberry</p>
+                        </td>
+                        <td>
+                            <h5>x 02</h5>
+                        </td>
+                        <td>
+                            <p>${{ order_item.product.brand }}</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td>
+                            <h4>Subtotal</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>$2160.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Shipping</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>Flat rate: $50.00</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h4>Total</h4>
+                        </td>
+                        <td>
+                            <h5></h5>
+                        </td>
+                        <td>
+                            <p>$2210.00</p>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+<!--================End Order Details Area =================-->
+{% endblock %}
