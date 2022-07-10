@@ -2,12 +2,12 @@
 ___
 #### This is a simple e-commerce website built with Django.
 
-![page](/home/modi/Pictures/Screenshots/Screenshot from 2022-07-10 16-50-44.png)
+![page](https://github.com/nmModi/karma-eccommerce/blob/main/media/Screenshot%20from%202022-07-10%2016-50-44.png)
 
 ___
 ## Project Summary
 Products are featured on the site. Users can add and remove items from their cart, as well as specify the quantity of each item and use discount coupons. Payment is made through the braintree system.
-![page](/home/modi/Pictures/Screenshots/Screenshot from 2022-07-10 17-00-46.png)
+![page](https://github.com/nmModi/karma-eccommerce/blob/main/media/Screenshot%20from%202022-07-10%2017-00-46.png)
 
 ___
 ## Follow the following steps to run this in your local machine
