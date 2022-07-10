@@ -9,4 +9,5 @@ urlpatterns = [
     path('search/', views.SearchView.as_view(), name='search'),
     path('filter_data/', views.FilterData.as_view(), name='filter_data'),
     path('comment/<int:pk>/', views.AddComment.as_view(), name='add_comment'),
+    path('load_more/', views.LoadMoreColors.as_view(), name='load_more')
 ]

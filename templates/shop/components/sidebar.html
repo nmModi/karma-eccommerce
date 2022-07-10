@@ -40,7 +40,7 @@
         <div class="common-filter">
             <div class="head">Color</div>
             <form action="#">
-                <ul>
+                <ul id="colors">
                     {% for color in colors %}
                     <li class="filter-list">
                         <label>
@@ -54,7 +54,7 @@
                     {% endfor %}
                     <li class="filter-list">
                         <label style="padding:5px">
-                            <span id="loadMore"><strong>+ </strong>Load more</span>
+                            <span id="load-color"><strong>+ </strong>Load more</span>
                         </label>
                     </li>
                 </ul>

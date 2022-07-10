@@ -37,7 +37,7 @@ class ProductListView(ProductFilter, ListView):
         context['cart_product_form'] = CartAddProductForm()
         context['categories'] = Category.objects.distinct().values_list('name', 'id')
         context['brands'] = Brand.objects.all().values_list('name', 'id')
-        context['colors'] = Color.objects.all().values_list('name', 'id', 'color_code')
+        context['colors'] = Color.objects.all().values_list('name', 'id', 'color_code')[:2]
         context['minMaxPrice'] = Product.objects.aggregate(Min('price'), Max('price'))
         return context
 
@@ -89,8 +89,14 @@ class FilterData(View):
         if len(categories) > 0:
             all_products = all_products.filter(category__id__in=categories)
         t = render_to_string('shop/ajax/product-list.html', {'data': all_products})
-        print(t)
         return JsonResponse({'data': t})
+
+
+class LoadMoreColors(View):
+    def get(self, request):
+        colors = Color.objects.all().values_list('name', 'id', 'color_code')
+        t = render_to_string('shop/ajax/load_more.html', {'colors': colors})
+        return JsonResponse({'colors': t})
 
 
 class AddComment(View):

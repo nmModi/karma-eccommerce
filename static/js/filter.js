@@ -34,6 +34,15 @@ $(document).ready(function() {
         });
         // end
     });
+
+    $('#load-color').on('click', function() {
+        $.ajax({
+            url: '/load_more/',
+            success: function(res) {
+                $('#colors').html(res.colors);
+            }
+        })
+    })
 })
 
 

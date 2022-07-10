@@ -1,0 +1,11 @@
+{% for color in colors %}
+<li class="filter-list">
+    <label>
+        <input class="pixel-radio" style="background:{{ color.2 }}" type="checkbox"
+               name="color" data-filter="color"
+               value="{{ color.1 }}">
+        {{ color.0 }}
+        <span></span>
+    </label>
+</li>
+{% endfor %}
